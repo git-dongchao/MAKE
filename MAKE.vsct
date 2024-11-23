@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+  <!--  The VSCT compiler (the tool that translates this file into the binary
+        format that VisualStudio will consume) has the ability to run a preprocessor
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
+        it is possible to define includes and macros with the same syntax used
+        in C++ files. Using this ability of the compiler here, we include some files
+        defining some of the constants that we will use inside the file. -->
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+  <Extern href="VsDbgCmd.h"/>
+  <Extern href="vsdebugguids.h"/>
+
+  <!--The Commands section is where commands, menus, and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidMAKEPackage">
+    <!-- Inside this section we have different sub-sections: one for the menus, another
+    for the menu groups, one for the buttons (the actual commands), one for the combos
+    and the last one for the bitmaps used. Each element is identified by a command id that
+    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
+    called "command set" and is used to group different command inside a logically related
+    group; your package should define its own command set in order to avoid collisions
+    with command ids defined by other packages. -->
+
+    <Menus>
+        <!-- "MAKE菜单" -->
+        <Menu guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU" priority="0x0300" type="Menu">
+            <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText>MAKE</ButtonText>
+                <CommandName>MAKE</CommandName>
+            </Strings>
+        </Menu>
+
+        <!-- "MAKE菜单/生成子菜单"-->
+        <Menu guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" priority="0x1000" type="Menu">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText>生成</ButtonText>
+            </Strings>
+        </Menu>
+
+        <!-- "MAKE菜单/调试子菜单"-->
+        <Menu guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU" priority="0x2000" type="Menu">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText>调试</ButtonText>
+            </Strings>
+        </Menu>
+
+        <!-- "MAKE菜单/运行子菜单"-->
+        <Menu guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU" priority="0x3000" type="Menu">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText>运行</ButtonText>
+            </Strings>
+        </Menu>
+
+        <!-- "MAKE菜单/IntelliSense环境子菜单"-->
+        <Menu guid="guidMAKEPackageCmdSet" id="ID_INTELLISENSE_ENV_SUBMENU" priority="0x5000" type="Menu">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP2" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText>IntelliSense环境</ButtonText>
+            </Strings>
+        </Menu>
+    </Menus>
+
+    <!-- In this section you can define new menu groups. A menu group is a container for
+         other menus or buttons (commands); from a visual point of view you can see the
+         group as the part of a menu contained between two lines. The parent of a group
+         must be a menu. -->
+    <Groups>
+
+        <!-- "MAKE菜单组" -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU" />
+        </Group>
+
+        <!-- "MAKE菜单/生成菜单组" -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU_GROUP" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" />
+        </Group>
+        <Group guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU_GROUP2" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" />
+        </Group>
+
+        <!-- "MAKE菜单/调试菜单组" -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU_GROUP" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU" />
+        </Group>
+        <Group guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU_GROUP2" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU" />
+        </Group>
+
+        <!-- "MAKE菜单/运行菜单组" -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU_GROUP" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU" />
+        </Group>
+        <Group guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU_GROUP2" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU" />
+        </Group>
+
+        <Group guid="guidMAKEPackageCmdSet" id="ID_INTELLISENSE_ENV_SUBMENU_GROUP" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_INTELLISENSE_ENV_SUBMENU" />
+        </Group>
+
+        <!-- "MAKE菜单/清除菜单组 -->
+        <!--<Group guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP1" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU" />
+        </Group>-->
+
+        <!-- "MAKE菜单/IntelliSense菜单组 -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP2" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU" />
+        </Group>
+
+        <!-- "MAKE菜单/设置菜单组 -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP3" priority="0x0000">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU" />
+        </Group>
+
+        <!-- 右键菜单组 -->
+        <Group guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" priority="0x0000">
+            <Parent guid="guidOpenFolderMainMenu" id="IDM_VS_TOOL_WINDOWUI" />
+        </Group>
+    </Groups>
+
+    <!--Buttons section. -->
+    <!--This section defines the elements the user can interact with, like a menu command or a button
+        or combo box in a toolbar. -->
+    <Buttons>
+        <!--To define a menu group you have to specify its ID, the parent menu and its display priority.
+          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
+          the CommandFlag node.
+          You can add more than one CommandFlag node e.g.:
+              <CommandFlag>DefaultInvisible</CommandFlag>
+              <CommandFlag>DynamicVisibility</CommandFlag>
+          If you do not want an image next to your command, remove the Icon node /> -->
+
+        <!-- MAKE菜单/生成子菜单按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_BUILD_START_SUBITEM" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU_GROUP" />
+            <CommandFlag>DynamicItemStart</CommandFlag>
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>DefaultInvisible</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText></ButtonText>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/调试子菜单按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_DEBUG_START_SUBITEM" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_DEBUG_SUBMENU_GROUP" />
+            <CommandFlag>DynamicItemStart</CommandFlag>
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>DefaultInvisible</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText></ButtonText>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/运行子菜单按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_RUN_START_SUBITEM" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_RUN_SUBMENU_GROUP" />
+            <CommandFlag>DynamicItemStart</CommandFlag>
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>DefaultInvisible</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText></ButtonText>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/清除按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_CLEAR" priority="0x4000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP" />
+            <Icon guid="ClearIcon" id="ClearIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>清除</ButtonText>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/IntelliSense环境子菜单按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_INTELLISENSE_ENV_START_SUBITEM" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_INTELLISENSE_ENV_SUBMENU_GROUP" />
+            <CommandFlag>DynamicItemStart</CommandFlag>
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>DefaultInvisible</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <Strings>
+                <ButtonText></ButtonText>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/IntelliSense重置按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_RESET_INTELLISENSE" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP2" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>IntelliSense重置</ButtonText>
+                <CommandName>ResetIntelliSense</CommandName>
+            </Strings>
+        </Button>
+
+        <!-- MAKE菜单/设置按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_SETTINGS_BUTTON" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_TOOL_MAIN_MENU_GROUP3" />
+            <Icon guid="SettingsIcon" id="SettingsIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>设置</ButtonText>
+                <CommandName>MakeOption</CommandName>
+            </Strings>
+        </Button>
+
+        <!-- 右键菜单/生成按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_BUILD_CONTEXT_MENU" priority="0x0000" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" />
+            <Icon guid="BuildIcon" id="BuildIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>生成</ButtonText>
+                <CommandName>MakeBuild</CommandName>
+            </Strings>
+        </Button>
+        <!-- 右键菜单/调试按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_DEBUG_CONTEXT_MENU" priority="0x0001" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" />
+            <Icon guid="DebugIcon" id="DebugIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>调试</ButtonText>
+                <CommandName>MakeDebug</CommandName>
+            </Strings>
+        </Button>
+        <!-- 右键菜单/运行按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_RUN_CONTEXT_MENU" priority="0x0001" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" />
+            <Icon guid="RunIcon" id="RunIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>运行</ButtonText>
+                <CommandName>MakeRun</CommandName>
+            </Strings>
+        </Button>
+        <!-- 右键菜单/Windows终端按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_WINDOWS_TERMINAL_CONTEXT_MENU" priority="0x0002" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" />
+            <Icon guid="TerminalIcon" id="TerminalIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>Windows终端</ButtonText>
+                <CommandName>WindowsTerminal</CommandName>
+            </Strings>
+        </Button>
+        <!-- 右键菜单/Linux终端按钮 -->
+        <Button guid="guidMAKEPackageCmdSet" id="ID_LINUX_TERMINAL_CONTEXT_MENU" priority="0x0003" type="Button">
+            <Parent guid="guidMAKEPackageCmdSet" id="ID_MAIN_CONTEXT_MENU" />
+            <Icon guid="TerminalIcon" id="TerminalIcon" />
+            <CommandFlag>DynamicVisibility</CommandFlag>
+            <CommandFlag>TextChanges</CommandFlag>
+            <CommandFlag>DontCache</CommandFlag>
+            <CommandFlag>DefaultDisabled</CommandFlag>
+            <Strings>
+                <ButtonText>Linux终端</ButtonText>
+                <CommandName>LinuxTerminal</CommandName>
+            </Strings>
+        </Button>
+
+    </Buttons>
+
+    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+    <Bitmaps>
+      <Bitmap guid="BuildIcon" href="Resources\Build.png" usedList="BuildIcon"/>
+      <Bitmap guid="DebugIcon" href="Resources\Debug.png" usedList="DebugIcon"/>
+      <Bitmap guid="RunIcon" href="Resources\Run.png" usedList="RunIcon"/>
+      <Bitmap guid="ClearIcon" href="Resources\Clear.png" usedList="ClearIcon"/>
+      <Bitmap guid="TerminalIcon" href="Resources\Terminal.png" usedList="TerminalIcon"/>
+      <Bitmap guid="SettingsIcon" href="Resources\Settings.png" usedList="SettingsIcon"/>
+    </Bitmaps>
+  </Commands>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidMAKEPackage" value="{f74dd4b2-9825-4685-a9fc-782474c17500}" />
+    <GuidSymbol name="guidOpenFolderMainMenu" value="{CFB400F1-5C60-4F3C-856E-180D28DEF0B7}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidMAKEPackageCmdSet" value="{d04c3aba-8f9f-469a-86f8-4f071d420f9b}">
+      <!-- MAKE菜单组 -->
+      <IDSymbol name="ID_TOOL_MAIN_MENU" value="0x1001" />
+      <IDSymbol name="ID_TOOL_MAIN_MENU_GROUP" value="0x1002" />
+      <IDSymbol name="ID_TOOL_MAIN_MENU_GROUP2" value="0x1003" />
+      <IDSymbol name="ID_TOOL_MAIN_MENU_GROUP3" value="0x1004" />
+      
+      <!-- "MAKE菜单/生成子菜单" -->
+      <IDSymbol name="ID_BUILD_SUBMENU" value="0x1101" />
+      <IDSymbol name="ID_BUILD_SUBMENU_GROUP" value="0x1102" />
+      <IDSymbol name="ID_BUILD_START_SUBITEM" value="0x1103" />
+      <IDSymbol name="ID_BUILD_END_SUBITEM" value="0x1143" />
+      <IDSymbol name="ID_BUILD_SUBMENU_GROUP2" value="0x1144" />
+
+      <!-- "MAKE菜单/调试子菜单" -->
+      <IDSymbol name="ID_DEBUG_SUBMENU" value="0x1201" />
+      <IDSymbol name="ID_DEBUG_SUBMENU_GROUP" value="0x1202" />
+      <IDSymbol name="ID_DEBUG_START_SUBITEM" value="0x1203" />
+      <IDSymbol name="ID_DEBUG_END_SUBITEM" value="0x1243" />
+      <IDSymbol name="ID_DEBUG_SUBMENU_GROUP2" value="0x1244" />
+
+      <!-- "MAKE菜单/运行子菜单" -->
+      <IDSymbol name="ID_RUN_SUBMENU" value="0x1301" />
+      <IDSymbol name="ID_RUN_SUBMENU_GROUP" value="0x1302" />
+      <IDSymbol name="ID_RUN_START_SUBITEM" value="0x1303" />
+      <IDSymbol name="ID_RUN_END_SUBITEM" value="0x1343" />
+      <IDSymbol name="ID_RUN_SUBMENU_GROUP2" value="0x1344" />
+
+      <IDSymbol name="ID_CLEAR" value="0x1390" />
+
+      <!-- "MAKE菜单/IntelliSense环境子菜单" -->
+      <IDSymbol name="ID_INTELLISENSE_ENV_SUBMENU" value="0x1401" />
+      <IDSymbol name="ID_INTELLISENSE_ENV_SUBMENU_GROUP" value="0x1402" />
+      <IDSymbol name="ID_INTELLISENSE_ENV_START_SUBITEM" value="0x1403" />
+      <IDSymbol name="ID_INTELLISENSE_ENV_END_SUBITEM" value="0x1443" />
+      <!-- "MAKE菜单/IntelliSense重置按钮" -->
+      <IDSymbol name="ID_RESET_INTELLISENSE" value="0x1451" />
+
+        <!-- "MAKE菜单/设置按钮" -->
+      <IDSymbol name="ID_SETTINGS_BUTTON" value="0x1501" />
+
+      <!-- 右键菜单 -->
+      <IDSymbol name="ID_MAIN_CONTEXT_MENU" value="0x2001" />
+      <!-- 右键菜单/生成按钮 -->
+      <IDSymbol name="ID_BUILD_CONTEXT_MENU" value="0x2002" />
+      <!-- 右键菜单/调试按钮 -->
+      <IDSymbol name="ID_DEBUG_CONTEXT_MENU" value="0x2003" />
+      <!-- 右键菜单/运行按钮 -->
+      <IDSymbol name="ID_RUN_CONTEXT_MENU" value="0x2004" />
+      <!-- 右键菜单/Window按钮 -->
+      <IDSymbol name="ID_WINDOWS_TERMINAL_CONTEXT_MENU" value="0x2005" />
+      <!-- 右键菜单/Linux按钮 -->
+      <IDSymbol name="ID_LINUX_TERMINAL_CONTEXT_MENU" value="0x2006" />
+
+    </GuidSymbol>
+
+    <GuidSymbol name="BuildIcon" value="{B908DB18-3A76-4B1A-90CC-8BDE29481B98}">
+      <IDSymbol name="BuildIcon" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="DebugIcon" value="{A6139B04-153A-4486-AE94-2856AF66ABF9}">
+      <IDSymbol name="DebugIcon" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="RunIcon" value="{17662406-AAB0-4A32-B0DD-9F725A5EB99A}">
+      <IDSymbol name="RunIcon" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="ClearIcon" value="{BB6243E5-FD23-4721-93D9-73EDA62EEE23}">
+      <IDSymbol name="ClearIcon" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="SettingsIcon" value="{993FDCD3-40E4-4F94-9C4A-072D87ACE4F7}">
+      <IDSymbol name="SettingsIcon" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="TerminalIcon" value="{85E67E28-BAC9-4094-A648-930C39E870AC}">
+      <IDSymbol name="TerminalIcon" value="1" />
+    </GuidSymbol>
+  </Symbols>
+
+  <VisibilityConstraints>
+      <!--
+      <VisibilityItem guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" context="UICONTEXT_EmptySolution"/>
+      <VisibilityItem guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" context="UICONTEXT_NoSolution"/>
+      <VisibilityItem guid="guidMAKEPackageCmdSet" id="ID_BUILD_SUBMENU" context="UICONTEXT_SolutionExists"/>
+      -->
+  </VisibilityConstraints>
+  
+
+</CommandTable>

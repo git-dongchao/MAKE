@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "inheritEnvironments": [
+                "linux_x64"
+            ],
+            "defines": [],
+            "includePath": [],
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ]
+}
